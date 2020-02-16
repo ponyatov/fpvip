@@ -1,5 +1,10 @@
 /// @file
+/// @brief @ref mob server
 /// @defgroup fpvd FPVD
-/// @brief FPV/IP @ref mob server
+/// @brief @ref mob server
 
-main(){}
+#include "fpvip.hh"
+
+int main(int argc, char *argv[]) {
+    return 0;
+}
