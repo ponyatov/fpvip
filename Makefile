@@ -11,7 +11,7 @@ PORT = 12345
 
 .PHONY: all
 all: fpvd fpvip
-	./fpvd  $(IP) $(PORT) &
+	./fpvd  $(IP) $(PORT) /dev/video0 &
 	./fpvip $(IP) $(PORT)
 
 
@@ -20,10 +20,14 @@ C_C = fpvip.cc
 C_D = fpvd.cc
 H = fpvip.hh
 
+INDENT	= clang-format-7 -i
+ANALIZ	= clang++-7 --analyze -Weverything -Wpedantic
+
+CXXFLAGS += -O0
 fpvip: $(C_C) $(H)
-	$(CXX) $(CXXFLAGS) -o $@ $(C_C) $(L)
+	$(INDENT) $^ ; $(ANALIZ) $(C_C) && $(CXX) $(CXXFLAGS) -o $@ $(C_C) $(L)
 fpvd : $(C_D) $(H)
-	$(CXX) $(CXXFLAGS) -o $@ $(C_D) $(L)
+	$(INDENT) $^ ; $(ANALIZ) $(C_D) && $(CXX) $(CXXFLAGS) -o $@ $(C_D) $(L)
 
 
 
@@ -33,7 +37,7 @@ doxy:
 
 
 
-MERGE  = Makefile README.md doxy.gen doc fpvip.hh fpvip.cc fpvd.cc
+MERGE  = Makefile README.md doxy.gen doc/*.md fpvip.hh fpvip.cc fpvd.cc
 
 .PHONY: merge release zip
 

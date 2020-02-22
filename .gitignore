@@ -5,3 +5,7 @@
 fpvd
 fpvip
 fpvgw
+
+docs/
+
+*.plist
